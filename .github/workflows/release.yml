@@ -1,0 +1,63 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - run: npm ci
+
+      - name: Stamp system.json with release version
+        shell: pwsh
+        run: |
+          $tag = "${{ github.event.release.tag_name }}"
+          $version = $tag -replace '^v(\d)', '$1'
+          $repo = "${{ github.repository }}"
+
+          $manifest = Get-Content system.json -Raw | ConvertFrom-Json
+          $manifest.version = $version
+          $manifest.manifest = "https://github.com/$repo/releases/download/$tag/system.json"
+          $manifest.download = "https://github.com/$repo/releases/download/$tag/dark-heresy.zip"
+          $manifest | ConvertTo-Json -Depth 10 | Set-Content system.json
+
+      - name: Build (CSS, packs, JS bundle)
+        run: npm run build
+
+      - name: Assemble and zip release package
+        shell: pwsh
+        run: |
+          $target = ".\release"
+          Copy-Item -Path ".\asset" -Destination $target -Recurse
+          Copy-Item -Path ".\lang" -Destination $target -Recurse
+          Copy-Item -Path ".\logo" -Destination $target -Recurse
+          Copy-Item -Path ".\packs" -Destination $target -Recurse
+          Copy-Item -Path ".\template" -Destination $target -Recurse
+          Copy-Item -Path ".\CONTRIBUTING.md" -Destination $target
+          Copy-Item -Path ".\README.md" -Destination $target
+          Copy-Item -Path ".\LICENSE" -Destination $target
+          Copy-Item -Path ".\system.json" -Destination $target
+          Copy-Item -Path ".\template.json" -Destination $target
+
+          Compress-Archive -Path "$target\*" -DestinationPath ".\dark-heresy.zip" -CompressionLevel Optimal
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dark-heresy.zip
+            system.json

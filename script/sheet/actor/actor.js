@@ -2,6 +2,12 @@ import { prepareCommonRoll, prepareCombatRoll, preparePsychicPowerRoll } from ".
 import DarkHeresyUtil from "../../common/util.js";
 
 export class DarkHeresySheet extends ActorSheet {
+    static get defaultOptions() {
+        return foundry.utils.mergeObject(super.defaultOptions, {
+            resizable: true
+        });
+    }
+
     activateListeners(html) {
         super.activateListeners(html);
         html.find(".item-create").click(ev => this._onItemCreate(ev));

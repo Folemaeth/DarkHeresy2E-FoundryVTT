@@ -69,7 +69,7 @@
   "secondaryTokenAttribute": null,
   "url": "https://github.com/Folemaeth/DarkHeresy2E-FoundryVTT",
   "socket": true,
-  "manifest": "https://github.com/Folemaeth/DarkHeresy2E-FoundryVTT/releases/download/v4.5.0/system.json",
+  "manifest": "https://raw.githubusercontent.com/Folemaeth/DarkHeresy2E-FoundryVTT/master/system.json",
   "download": "https://github.com/Folemaeth/DarkHeresy2E-FoundryVTT/releases/download/v4.5.0/dark-heresy.zip",
   "license": "LICENSE.txt"
 }

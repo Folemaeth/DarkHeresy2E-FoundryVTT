@@ -22,18 +22,17 @@ jobs:
 
       - run: npm ci
 
-      - name: Stamp system.json with release version
+      - name: Verify system.json matches the release tag
         shell: pwsh
         run: |
           $tag = "${{ github.event.release.tag_name }}"
           $version = $tag -replace '^v(\d)', '$1'
-          $repo = "${{ github.repository }}"
-
           $manifest = Get-Content system.json -Raw | ConvertFrom-Json
-          $manifest.version = $version
-          $manifest.manifest = "https://github.com/$repo/releases/download/$tag/system.json"
-          $manifest.download = "https://github.com/$repo/releases/download/$tag/dark-heresy.zip"
-          $manifest | ConvertTo-Json -Depth 10 | Set-Content system.json
+
+          if ($manifest.version -ne $version) {
+            Write-Error "system.json version '$($manifest.version)' does not match release tag '$tag' (expected '$version'). Bump system.json's version/download on master before publishing this release."
+            exit 1
+          }
 
       - name: Build (CSS, packs, JS bundle)
         run: npm run build

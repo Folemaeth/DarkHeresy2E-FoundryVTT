@@ -1,4 +1,10 @@
 export class DarkHeresyItemSheet extends ItemSheet {
+    static get defaultOptions() {
+        return foundry.utils.mergeObject(super.defaultOptions, {
+            resizable: true
+        });
+    }
+
     activateListeners(html) {
         super.activateListeners(html);
         html.find("input").focusin(ev => this._onFocusIn(ev));

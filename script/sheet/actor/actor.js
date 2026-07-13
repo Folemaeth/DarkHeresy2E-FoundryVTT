@@ -17,6 +17,8 @@ export class DarkHeresySheet extends ActorSheet {
         html.find(".roll-characteristic").click(async ev => await this._prepareRollCharacteristic(ev));
         html.find(".roll-skill").click(async ev => await this._prepareRollSkill(ev));
         html.find(".roll-speciality").click(async ev => await this._prepareRollSpeciality(ev));
+        html.find(".speciality-create").click(ev => this._onSpecialityCreate(ev));
+        html.find(".speciality-delete").click(ev => this._onSpecialityDelete(ev));
         html.find(".roll-insanity").click(async ev => await this._prepareRollInsanity(ev));
         html.find(".roll-corruption").click(async ev => await this._prepareRollCorruption(ev));
         html.find(".roll-weapon").click(async ev => await this._prepareRollWeapon(ev));
@@ -91,6 +93,32 @@ export class DarkHeresySheet extends ActorSheet {
         const div = $(event.currentTarget).parents(".item");
         this.actor.deleteEmbeddedDocuments("Item", [div.data("itemId")]);
         div.slideUp(200, () => this.render(false));
+    }
+
+    _onSpecialityCreate(event) {
+        event.preventDefault();
+        const skillKey = $(event.currentTarget).data("skill");
+        const name = window.prompt(game.i18n.localize("DIALOG.ADD_SPECIALITY_NAME"));
+        if (!name?.trim()) return;
+        const specKey = name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-+|-+$)/g, "");
+        if (!specKey || this.actor.system.skills[skillKey].specialities[specKey]) return;
+        this.actor.update({
+            [`system.skills.${skillKey}.specialities.${specKey}`]: {
+                label: name.trim(),
+                advance: -20,
+                starter: false,
+                cost: 0,
+                custom: true
+            }
+        });
+    }
+
+    _onSpecialityDelete(event) {
+        event.preventDefault();
+        const div = $(event.currentTarget).parents(".item");
+        this.actor.update({
+            [`system.skills.${div.data("skill")}.specialities.-=${div.data("speciality")}`]: null
+        });
     }
 
     _onAmmoUnlink(event) {

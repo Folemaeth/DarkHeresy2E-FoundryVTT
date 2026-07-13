@@ -172,6 +172,7 @@
     "DAMAGE_TYPE.EXPLOSIVE_SHORT": "X",
     "DIALOG.CUSTOM_ROLL": "Custom Roll",
     "DIALOG.ROLL_WITH": "Roll With",
+    "DIALOG.ADD_SPECIALITY_NAME": "New speciality name",
     "DIALOG.CLIP": "Ammo Left",
     "DIALOG.TARGET": "Target",
     "DIALOG.BONUS": "Bonus",

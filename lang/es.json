@@ -147,6 +147,7 @@
   "DAMAGE_TYPE.EXPLOSIVE_SHORT": "X",
 
   "DIALOG.CUSTOM_ROLL": "Tirada personalizada",
+  "DIALOG.ADD_SPECIALITY_NAME": "Nombre de la nueva especialidad",
   "DIALOG.TARGET": "Objetivo",
   "DIALOG.CLIP": "Munición Restante",
   "DIALOG.BONUS": "Bonus",

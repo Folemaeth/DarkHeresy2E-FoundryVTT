@@ -185,9 +185,12 @@
                     {{#if skill.isSpecialist}}
                         <div class="flex header">
                             <b class="name">{{localize skill.label}}</b>
+                            {{#if skill.customSpecialities}}
+                                <a class="button speciality-create" title="Add Speciality" data-skill="{{key}}"><i class="fas fa-plus"></i></a>
+                            {{/if}}
                         </div>
                         {{#each skill.specialities as |speciality keySpe|}}
-                            <div class="speciality item flex row">
+                            <div class="speciality item flex row" data-skill="{{key}}" data-speciality="{{keySpe}}">
                                 <div class="name">{{localize speciality.label}}</div>
                                 <select class="advance" name="system.skills.{{key}}.specialities.{{keySpe}}.advance" data-dtype="Number">
                                     {{selectOptions (config "advanceStagesSkills") selected=speciality.advance localize=true}}
@@ -195,6 +198,11 @@
                                 <input class="total" name="system.skills.{{key}}.specialities.{{keySpe}}.total" type="number" value="{{speciality.total}}" data-dtype="Number" disabled />
                                 <input class="cost" name="system.skills.{{key}}.specialities.{{keySpe}}.cost" type="number" value="{{speciality.cost}}" data-dtype="Number" />
                                 <input class="starter" name="system.skills.{{key}}.specialities.{{keySpe}}.starter" type="checkbox" {{#if speciality.starter}}checked{{/if}} data-dtype="Boolean" />
+                                <div class="button">
+                                    {{#if speciality.custom}}
+                                        <a class="speciality-delete" title="Delete Speciality"><i class="fas fa-trash"></i></a>
+                                    {{/if}}
+                                </div>
                             </div>
                         {{/each}}
                     {{/if}}

@@ -245,6 +245,7 @@
                         ],
                         "advance": -20,
                         "isSpecialist": true,
+                        "customSpecialities": true,
                         "aptitudes": [
                             "Intelligence",
                             "Knowledge"
@@ -417,6 +418,7 @@
                         ],
                         "advance": -20,
                         "isSpecialist": true,
+                        "customSpecialities": true,
                         "aptitudes": [
                             "Intelligence",
                             "Knowledge"
@@ -559,6 +561,7 @@
                         ],
                         "advance": -20,
                         "isSpecialist": true,
+                        "customSpecialities": true,
                         "aptitudes": [
                             "Intelligence",
                             "General"
@@ -782,6 +785,7 @@
                         ],
                         "advance": -20,
                         "isSpecialist": true,
+                        "customSpecialities": true,
                         "aptitudes": [
                             "Intelligence",
                             "Knowledge"
@@ -973,6 +977,7 @@
                         ],
                         "advance": -20,
                         "isSpecialist": true,
+                        "customSpecialities": true,
                         "aptitudes": [
                             "Intelligence",
                             "General"

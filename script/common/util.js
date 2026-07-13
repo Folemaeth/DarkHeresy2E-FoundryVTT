@@ -118,8 +118,17 @@ export default class DarkHeresyUtil {
     static createSpecialtyRollData(actor, skillName, specialityName) {
         const skill = actor.skills[skillName];
         const speciality = skill.specialities[specialityName];
+        const defaultChar = skill.defaultCharacteristic || skill.characteristics[0];
+
+        let characteristics = this.getCharacteristicOptions(actor, defaultChar);
+        characteristics = characteristics.map(char => {
+            char.target += speciality.advance;
+            return char;
+        });
+
         return foundry.utils.mergeObject(this.createCommonNormalRollData(actor, speciality), {
-            name: speciality.label
+            name: speciality.label,
+            characteristics: characteristics
         });
     }
 
